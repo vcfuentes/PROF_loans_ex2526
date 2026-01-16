@@ -18,40 +18,40 @@ public class LoanApprovalService {
             Applicant applicant,
             int amountRequested,
             int termMonths
-    ) {
-        validate(applicant, amountRequested, termMonths);
+    ) { // 1
+        validate(applicant, amountRequested, termMonths); // 2
 
-        int score = applicant.creditScore();
-        boolean hasDefaults = applicant.hasRecentDefaults();
-        int income = applicant.monthlyIncome();
+        int score = applicant.creditScore(); // 3
+        boolean hasDefaults = applicant.hasRecentDefaults(); // 4
+        int income = applicant.monthlyIncome(); // 5
 
-        Decision decision;
+        Decision decision; // 6
 
-        if (score < 500) {
-            decision = Decision.REJECTED;
-        } else if (score < 650) {
-            if (income >= 2500 && !hasDefaults) {
-                decision = Decision.MANUAL_REVIEW;
+        if (score < 500) { // 7
+            decision = Decision.REJECTED; // 8
+        } else if (score < 650) { // 9
+            if (income >= 2500 && !hasDefaults) { // 10
+                decision = Decision.MANUAL_REVIEW; // 11
             } else {
-                decision = Decision.REJECTED;
+                decision = Decision.REJECTED; // 12
             }
         } else {
-            if (amountRequested <= income * 8) {
-                decision = Decision.APPROVED;
+            if (amountRequested <= income * 8) { // 13
+                decision = Decision.APPROVED; // 14
             } else {
-                decision = Decision.MANUAL_REVIEW;
+                decision = Decision.MANUAL_REVIEW; //15
             }
         }
 
         if (decision == Decision.MANUAL_REVIEW
                 && applicant.isVip()
                 && score >= 600
-                && !hasDefaults) {
-            decision = Decision.APPROVED;
+                && !hasDefaults) { // 16
+            decision = Decision.APPROVED; // 17
         }
 
-        return decision;
-    }
+        return decision; // 18
+    } // 19
 
     private void validate(Applicant applicant, int amountRequested, int termMonths) {
         Objects.requireNonNull(applicant, "applicant cannot be null");
